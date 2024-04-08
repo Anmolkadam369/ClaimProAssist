@@ -5,10 +5,17 @@ import {useNavigate} from 'react-router-dom'
 function Registration() {
     const navigate = useNavigate()
     const [regNo, setRegNo]=useState(null);
-    function getVehicalData(){
+    async function getVehicalData (){
         try {
-            navigate('../Location')
-            // const getData = axios.get(`http://3.133.132.156:3000/api/vehicle/${regNo}`)
+            const getData = await axios.get(`http://localhost:3001/api/vehicle/${regNo}`)
+            console.log("data",getData)
+            console.log(getData.data)
+            if(getData.status){
+                console.log("in if block", getData.data)
+                navigate('../Location', { state: { vehicleData: getData.data } });
+                }
+
+            else console.log("in else block")
         } catch (error) {
             console.log("error", error.message);
         }

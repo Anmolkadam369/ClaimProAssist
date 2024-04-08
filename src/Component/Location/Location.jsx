@@ -3,11 +3,26 @@ import './Location.css';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom'
 
-function Location() {
+function Location(props) {
+    console.log("props")
+    console.log("props",props)
+
+    const vehicleData = props?.location?.state?.vehicleData;
+    console.log("vehicalData", vehicleData)
     const navigate = useNavigate();
-    function submitted(){
-        console.log("some");
-        navigate("../Location1");
+    async function submitted(){
+        try {
+            const getData = await axios.get(`http://localhost:3001/api/vehicle`)
+            console.log("data",getData)
+            console.log(getData)
+            if(getData.status){
+                console.log("in if block")
+                 navigate('../Location1')}
+
+            else console.log("in else block")
+        } catch (error) {
+            console.log("error", error.message);
+        }
     }
     return(
         <div>
